@@ -1,7 +1,8 @@
+# Updated 2020-01-28 with vdisp from Table 2 in paper
 name,ngas,vdisp
 Aquarius II,0.1,5.4
 Boötes I,0.1,2.4
-Boötes II,0.1,7.4
+Boötes II,0.1,10.5
 Canes Venatici I,0.1,7.6
 Canes Venatici II,0.1,4.6
 Carina I,0.5,6.6
@@ -11,7 +12,7 @@ Coma Berenices I,0.1,4.6
 Crater I,0.1,
 Crater II,0.1,2.7
 Draco I,0.5,9.1
-Draco II,0.1,2.9
+Draco II,0.1,5.9
 Eridanus II,0.1,6.9
 Fornax I,0.5,11.7
 Grus I,0.1,2.9
@@ -33,7 +34,7 @@ Segue 2,0.1,3.4
 Sextans I,0.5,7.9
 Triangulum II,0.1,3.4
 Tucana II,0.1,8.5
-Tucana III,0.1,0.9
+Tucana III,0.1,1.2
 Ursa Major I,0.1,7.6
 Ursa Major II,0.1,6.7
 Ursa Minor I,0.5,9.5
