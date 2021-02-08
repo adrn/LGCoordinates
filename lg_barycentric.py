@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # Licensed under a 3-clause BSD style license - see LICENSE.rst
 
+import numpy as np
 import astropy.units as u
+import astropy.coordinates as coord
 from astropy.coordinates.matrix_utilities import (rotation_matrix,
                                                   matrix_product,
                                                   matrix_transpose)
@@ -18,6 +20,8 @@ from astropy.coordinates.errors import ConvertError
 from astropy.coordinates import ICRS
 from astropy.coordinates.builtin_frames.galactocentric import (Galactocentric,
                                                                _check_coord_repr_diff_types)
+
+coord.galactocentric_frame_defaults.set('v4.0')
 
 # The extra minus sign is because they report mu_W (west)
 _m31_pmra = -(-125.2*u.km/u.s / (770*u.kpc)).to(u.mas/u.yr,
@@ -127,3 +131,25 @@ def lgbarycentric_to_galactocentric(lgbarycentric_coord, galactocentric_frame):
                               lgbarycentric_coord.mw_mass,
                               lgbarycentric_coord.m31_mass,
                               inverse=True)
+
+
+@frame_transform_graph.transform(AffineTransform, LocalGroupBarycentric,
+                                 LocalGroupBarycentric)
+def lgbarycentric_to_lgbarycentric(c1, c2):
+    _check_coord_repr_diff_types(c1, 'LocalGroupBarycentric')
+
+    _, off1 = get_matrix_vectors(c1.mw_coord, c1.m31_coord,
+                                 c1.mw_mass, c1.m31_mass)
+    _, off2 = get_matrix_vectors(c2.mw_coord, c2.m31_coord,
+                                 c2.mw_mass, c2.m31_mass)
+
+    return np.eye(3), off2 - off1
+
+
+# Config stuff:
+MLG = 3.2e12 * u.Msun
+mw_masses = np.array([0.9, 1.2, 1.5]) * 1e12*u.Msun
+m31_masses = MLG - mw_masses
+
+fiducial_mw_mass = 1.2e12 * u.Msun
+fiducial_m31_mass = MLG - fiducial_mw_mass
